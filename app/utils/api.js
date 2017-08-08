@@ -1,5 +1,7 @@
 import axios from 'axios';
-const key = e72e3f791776264276bc7510fa5f5216;
+
+const key = 'e72e3f791776264276bc7510fa5f5216';
+
 const api = {
     fetchUserInfo: () => (
             axios.get('https://freegeoip.net/json/')
