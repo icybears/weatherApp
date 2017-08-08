@@ -10,8 +10,8 @@ class App extends Component {
             country_name: null,
             country_code: null,
             city: null,
-            latitude: null,
-            longitude: null,
+            lat: null,
+            lon: null,
             fetching:null
         }
     }
