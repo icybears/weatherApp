@@ -23,6 +23,40 @@ body{
 }
 .day-view .temp{
     position:absolute;
-    top:80px;
-    right:10px;
+    top:70px;
+    right:20px;
+    font-size: 1.2em;
+}
+.days-section{
+    min-width:348px;
+    max-width:870px;
+}
+.main-section{
+    position:relative;
+    max-width:864px;
+    /*background-color:rgba(255,255,255,0.9);*/
+    /* box-shadow:0 0 5px rgba(0,0,0,0.2); */
+    margin:2px;
+}
+.main-view{
+    position:relative;
+    background-color:rgba(255,255,255,0.9);
+    box-shadow:0 0 5px rgba(0,0,0,0.2);
+    max-width:520px;
+    min-width:345px;
+}
+.main-view .row{
+    text-align:center;
+}
+.main-view .row > div{
+    display:inline-block;
+    margin:5px;
+    width:30%;
+    height:150px;
+    vertical-align:top;
+    
+}
+.main-view .temp{
+    position:absolute;
+    right:20px;
 }

@@ -37,13 +37,16 @@ const api = {
                         {
                             day: getDay(item.dt_txt),
                             hour: getHour(item.dt_txt),
-                            temp: item.main.temp,
-                            temp_min: item.main.temp_min,
-                            temp_max: item.main.temp_max,
+                            temp: Math.round(item.main.temp),
+                            temp_min: Math.round(item.main.temp_min),
+                            temp_max: Math.round(item.main.temp_max),
                             humidity: item.main.humidity,
+                            wind_speed:item.wind.speed,
+                            wind_direction: Math.round(item.wind.deg),
+                            pressure: item.main.pressure,
                             short_desc: item.weather[0].main,
                             desc: item.weather[0].description,
-                            icon: item.weather[0].icon
+                            icon: `https://openweathermap.org/img/w/${item.weather[0].icon}.png`
 
                         }
                     )
