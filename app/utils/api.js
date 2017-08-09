@@ -48,7 +48,7 @@ const api = {
                         }
                     )
                 });
-                 console.log(formatedData);            
+                // console.log(formatedData);            
                return formatedData;                
             })
     ),
