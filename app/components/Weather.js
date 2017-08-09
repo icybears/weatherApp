@@ -1,6 +1,26 @@
 import React, { Component } from 'react';
 import api from '../utils/api';
-import DaysView from './DaysView'
+
+const MainView = (props) => {
+    return(
+        <div>
+            
+        </div>
+    )
+}
+const DayView = (props) => {
+    return (
+        <div className="day-view">
+            <div>{props.day} </div>
+            <div>{props.hour}</div>
+            <div>{props.short_desc}</div>
+            <div className="temp">
+                {props.temp}&nbsp;<span>°C</span>
+            </div>
+            <img src={`https://openweathermap.org/img/w/${props.icon}.png`} alt={`Icon for ${props.short_desc}`}/>
+        </div>
+    );
+};
 
 class Weather extends Component {
     constructor(props){
@@ -17,7 +37,7 @@ class Weather extends Component {
             .then(data => {
                 this.setState({
                     data: data
-                },() => {console.log(data)})
+                })
             })
             .catch(error => {
                 this.setState({
@@ -34,9 +54,8 @@ class Weather extends Component {
                         this.state.data && 
                         this.state.data.filter((item) => item.hour === this.state.data[0].hour)
                                         .map((day, index) => {
-                                            console.log(day);
                                            return(
-                                            <DaysView key={index} {...day} />
+                                            <DayView key={index} {...day} />
                                            )
                                         })
                     }  

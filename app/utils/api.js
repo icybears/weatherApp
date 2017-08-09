@@ -43,7 +43,7 @@ const api = {
                             humidity: item.main.humidity,
                             short_desc: item.weather[0].main,
                             desc: item.weather[0].description,
-                            icon: item.weather[0].main
+                            icon: item.weather[0].icon
 
                         }
                     )
