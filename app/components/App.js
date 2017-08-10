@@ -104,14 +104,12 @@ class App extends Component {
                 <h1>Weather App</h1>
                 <div className={btnsPositionClass}>
                     <div>
-                        <button onClick={this.checkUserWeather}>Check Weather in your own city</button>
+                        <button onClick={this.checkUserWeather}>View weather in your city</button>
                     </div>
-                    
-                        <span>Or</span>
-                   
+                        {/* <span className="separator">OR</span> */}
                     <div>
                     { !this.state.citySearch ?
-                        <button onClick={this.checkCityWeather}>Search Weather of a specific city</button>
+                        <button onClick={this.checkCityWeather}>Search other cities</button>
                         :
                         (<form onSubmit={this.submitCitySearch}>
                             <input type="text" placeholder="Enter city name" 
