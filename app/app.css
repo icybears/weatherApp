@@ -57,7 +57,7 @@ body{
 .main-view .row{
     text-align:center;
 }
-.main-view .row > div{
+ .row > div{
     display:inline-block;
     margin:5px;
     width:30%;
@@ -96,9 +96,26 @@ hr{
     width:39.2%;
     min-width:170px;
     display:inline-block;
-    background-color:rgba(255,255,255,0.9);
+    /*background-color:rgba(255,255,255,0.9);*/
     box-shadow:0 0 5px rgba(0,0,0,0.2);
     margin-left:5px;
     overflow-y: scroll;
     height:100%;
+}
+.space{
+    margin-top:20px;
+}
+.hours-section img{
+    position:relative;
+    top:-10px;
+    left:1%;
+
+}
+.hours-section .temp{
+    text-align:center;
+}
+.hours-section .row{
+    box-shadow:0 0 5px rgba(0,0,0,0.2);
+    cursor: pointer;
+    background-color:rgba(255,255,255,0.9);
 }
