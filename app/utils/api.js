@@ -34,8 +34,8 @@ const api = {
             axios.get('https://freegeoip.net/json/')
                 .then(response => response.data)
         ),
-    getForecast: (lat, lon) => (
-         axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=${key}&units=metric`)
+    getForecast: (city) => (
+         axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${key}&units=metric`)
             .then(response => {
                 const data = response.data.list;
                 const formatedData = data.map(item => {

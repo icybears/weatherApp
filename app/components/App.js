@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import api from '../utils/api';
 import Weather from './Weather';
-import {Route, Link} from 'react-router-dom';
+
 
 class App extends Component {
     constructor(props){
@@ -15,7 +15,8 @@ class App extends Component {
             region_name:null,
             lat: null,
             lon: null,
-            fetching:null
+            fetching:null,
+            citySearch: null,
         }
     }
     
@@ -33,33 +34,44 @@ class App extends Component {
                     region_name: data.region_name,
                     lat: data.latitude,
                     lon: data.longitude,
-                    fetching: false
+                    fetching: false,
+                    citySearch: false
                 })
             })
         )
+    }
+    checkCityWeather= () => {
+        this.setState({
+            citySearch:true
+        })
     }
     render() {
         const {city, country_name, lat, lon} = this.state;
         return (
             <div>
-                <Route path='/' component={Landing} />
                 <h1>Weather App</h1>
-                <Link to="/weather">
-                    <button onClick={this.checkUserWeather}>Check Weather in your own area</button>
-                </Link>
+                    <button onClick={this.checkUserWeather}>Check Weather in your own city</button>
+                    <h3>Or</h3>
+                    { this.state.citySearch === null ?
+                        <button onClick={this.checkCityWeather}>Search Weather of a specific city</button>
+                        :
+                        (<form>
+                            <input type="text" placeholder="Enter city name" />
+                        </form>
+                        )
+                    }
                 {
                     this.state.fetching && <div>Fetching data</div>
                 }
                 {
                     this.state.fetching===false &&
-                    <Route path='/weather' render={() => (
                             <Weather 
                             city={city} 
                             country_name={country_name} 
                             lat={lat}
                             lon={lon}
                             />
-                    )} />
+                 
 
                 }
             </div>

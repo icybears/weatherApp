@@ -108,8 +108,8 @@ class Weather extends Component {
         }
     }
     componentDidMount = () => {
-        const {lat, lon} = this.props;
-        api.getForecast(lat, lon)
+        const city = this.props.city;
+        api.getForecast(city)
             .then(data => {
                 this.setState({
                     data: data,
