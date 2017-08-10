@@ -6,7 +6,7 @@ body{
 .day-view{
     position:relative;
     display: inline-block;
-    width:150px;
+    width:149px;
     padding:10px;
     background-color:rgba(255,255,255,0.9);
     margin:2px;
@@ -118,4 +118,11 @@ hr{
     box-shadow:0 0 5px rgba(0,0,0,0.2);
     cursor: pointer;
     background-color:rgba(255,255,255,0.9);
+}
+.hours-section h3{
+    margin-top:0;
+    margin-bottom:0;
+}
+.selected{
+    border: solid 1px black;
 }
