@@ -29,11 +29,35 @@ const addCap = str => {
    
     return str[0].toUpperCase() + str.substr(1);
 }
+const substrCountry = address => {
+    let country = [];
+    for(let i = address.length - 1 ; i>=0 ; i--){
+    	
+        if(address[i]!==' ' ){
+            country = country.concat(address[i]);
+        }else{
+            break;
+        }
+    }
+    return country.reverse().join('');
+}
 const api = {
     fetchUserInfo: () => (
             axios.get('https://freegeoip.net/json/')
                 .then(response => response.data)
         ),
+    getCountry: (city) => (
+        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${city}&sensor=false`)
+            .then( response => {
+                const country_name = substrCountry(response.data.results[0].formatted_address);
+               return({
+                    country_name: country_name
+                })
+            
+            } 
+        )
+        
+    ),
     getForecast: (city) => (
          axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${key}&units=metric`)
             .then(response => {

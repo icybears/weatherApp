@@ -17,6 +17,7 @@ class App extends Component {
             lon: null,
             fetching:null,
             citySearch: null,
+            searchTerm: ''
         }
     }
     
@@ -29,20 +30,40 @@ class App extends Component {
                 this.setState({
                     ip: data.ip,
                     country_name: data.country_name,
-                    country_code: data.country_code,
                     city: data.city,
                     region_name: data.region_name,
                     lat: data.latitude,
                     lon: data.longitude,
                     fetching: false,
-                    citySearch: false
+                    citySearch: false,
+                    
                 })
             })
         )
     }
+    handleChange = (e) => {
+        this.setState({
+            searchTerm: e.target.value
+        })
+    }
+    submitCitySearch = (e) => {
+        e.preventDefault();
+       
+        api.getCountry(this.state.searchTerm)
+            .then(data => {
+                console.log(data);
+                this.setState({
+                    country_name: data.country_name,
+                })
+            })
+            .catch( error => {
+                console.warn('Error in submitCitySearch: '+error);
+            })
+
+    }
     checkCityWeather= () => {
         this.setState({
-            citySearch:true
+            citySearch:true,
         })
     }
     render() {
@@ -55,8 +76,12 @@ class App extends Component {
                     { this.state.citySearch === null ?
                         <button onClick={this.checkCityWeather}>Search Weather of a specific city</button>
                         :
-                        (<form>
-                            <input type="text" placeholder="Enter city name" />
+                        (<form onSubmit={this.submitCitySearch}>
+                            <input type="text" placeholder="Enter city name" 
+                                            value={this.state.searchTerm} 
+                                            onChange={this.handleChange} 
+                                            />
+                            <p>{this.state.searchTerm}</p>
                         </form>
                         )
                     }
@@ -67,9 +92,7 @@ class App extends Component {
                     this.state.fetching===false &&
                             <Weather 
                             city={city} 
-                            country_name={country_name} 
-                            lat={lat}
-                            lon={lon}
+                            country_name={country_name}
                             />
                  
 
