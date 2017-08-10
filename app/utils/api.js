@@ -21,7 +21,14 @@ const getHour = dateString => {
     let hour = d.getHours()<10 ? '0'+d.getHours().toString()+':00':d.getHours().toString()+':00';
     return hour;
 }
-
+const getFullDate = dateString => {
+    let d = new Date(dateString);
+    return d.toDateString();
+}
+const addCap = str => {
+   
+    return str[0].toUpperCase() + str.substr(1);
+}
 const api = {
     fetchUserInfo: () => (
             axios.get('https://freegeoip.net/json/')
@@ -37,6 +44,7 @@ const api = {
                         {
                             day: getDay(item.dt_txt),
                             hour: getHour(item.dt_txt),
+                            full_date: getFullDate(item.dt_txt),
                             temp: Math.round(item.main.temp),
                             temp_min: Math.round(item.main.temp_min),
                             temp_max: Math.round(item.main.temp_max),
@@ -45,7 +53,7 @@ const api = {
                             wind_direction: Math.round(item.wind.deg),
                             pressure: item.main.pressure,
                             short_desc: item.weather[0].main,
-                            desc: item.weather[0].description,
+                            desc: addCap(item.weather[0].description),
                             icon: `https://openweathermap.org/img/w/${item.weather[0].icon}.png`
 
                         }

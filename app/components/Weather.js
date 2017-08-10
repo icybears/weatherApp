@@ -5,21 +5,25 @@ const MainView = (props) => {
     return(
         <div className="main-view">
             <h2>{props.city},&nbsp;{props.country_name}</h2>
-            <div>{props.day}</div>
-            <div>{props.hour}</div>
-            <div>{props.desc}</div>
-            <img src={props.icon} alt={`Icon for ${props.desc}`}/>
-            <div>
+            <div className="row">
+                <div>{props.full_date}</div>
+                <div>{props.hour} UTC</div>
+                <div>{props.desc}</div>
+            </div>
+            <img className='icon' src={props.icon} alt={`Icon for ${props.desc}`}/>
+            <hr />
+            <div className="row">
                 <h3>Temperature</h3>
-                <div className="temp">{props.temp}&nbsp;<span>°C</span></div>
                 <div>Min: {props.temp_min}&nbsp;<span>°C</span></div>
                 <div>Max: {props.temp_max}&nbsp;<span>°C</span></div>
+                <div className="temp">{props.temp}&nbsp;<span>°C</span></div>
             </div>
+            <hr />
             <div className="row">
                 <div>
                     <h3>Wind</h3>
-                    <div>Speed: {props.wind_speed} m/s</div>
-                    <div>Direction: {props.wind_direction} deg</div>
+                    <div><span>Speed:</span> {props.wind_speed}&nbsp;m/s</div>
+                    <div><span>Direction:</span> {props.wind_direction}&nbsp;deg</div>
                 </div>
                 <div>
                     <h3>Pressure</h3>
