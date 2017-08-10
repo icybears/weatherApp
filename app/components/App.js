@@ -98,10 +98,11 @@ class App extends Component {
     }
     render() {
         const {city, country_name, lat, lon} = this.state;
+        const btnsPositionClass= (this.state.fetching === false) ? 'top btns' : 'middle btns';
         return (
             <div>
                 <h1>Weather App</h1>
-                <div className="row">
+                <div className={btnsPositionClass}>
                     <div>
                         <button onClick={this.checkUserWeather}>Check Weather in your own city</button>
                     </div>
