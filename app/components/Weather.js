@@ -86,7 +86,7 @@ class HourView extends Component{
         const styleClass = (selectedHour === hour)? 'row selected': 'row';
 
         return(
-            <div onClick={this.handleClick} className="row">
+            <div onClick={this.handleClick} className={styleClass}>
                 <h3>{hour} UTC</h3>
                 <div className="temp">{temp}&nbsp;<span>°C</span></div>
                 <div>{desc}</div>
@@ -171,9 +171,7 @@ class Weather extends Component {
                       {
                         this.state.data && 
                         this.state.data.filter((item) => {
-                                // this one is to be changed later
-                                // needs to check selectedHour!!
-                            return(item.hour === this.state.data[0].hour) 
+                            return(item.hour === this.state.selectedHour) 
                             })
                                     .map((dayObj, index) => {
 
