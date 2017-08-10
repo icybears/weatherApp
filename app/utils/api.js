@@ -33,13 +33,13 @@ const substrCountry = address => {
     let country = [];
     for(let i = address.length - 1 ; i>=0 ; i--){
     	
-        if(address[i]!==' ' ){
+        if(address[i]!==',' ){
             country = country.concat(address[i]);
         }else{
             break;
         }
     }
-    return country.reverse().join('');
+    return country.reverse().join('').trim();
 }
 const api = {
     fetchUserInfo: () => (
@@ -49,13 +49,25 @@ const api = {
     getCountry: (city) => (
         axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${city}&sensor=false`)
             .then( response => {
+                if(response.data.results.length === 0){
+                     throw 'Invalid City Name';
+                }
+                if(response.data.results[0].geometry.location_type==="APPROXIMATE"){
                 const country_name = substrCountry(response.data.results[0].formatted_address);
+                const city_name = response.data.results[0].address_components[0].short_name;
                return({
-                    country_name: country_name
+                    country_name: country_name,
+                    city_name: city_name
                 })
+                }
+                else{
+                    throw 'Invalid City Name';
+                }
             
             } 
-        )
+        ).catch( error => {
+            console.warn(error);
+        })
         
     ),
     getForecast: (city) => (

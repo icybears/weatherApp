@@ -10,28 +10,27 @@ class App extends Component {
         this.state = {
             ip: null,
             country_name: null,
-            country_code: null,
             city: null,
-            region_name:null,
             lat: null,
             lon: null,
             fetching:null,
             citySearch: null,
-            searchTerm: ''
+            searchTerm: '',
+            error:null,
+            errorMsg:null
         }
     }
     
     checkUserWeather = () => {
         this.setState({
             fetching: true
-        },() => 
+        },() => {
         api.fetchUserInfo()
             .then(data => {
                 this.setState({
                     ip: data.ip,
                     country_name: data.country_name,
                     city: data.city,
-                    region_name: data.region_name,
                     lat: data.latitude,
                     lon: data.longitude,
                     fetching: false,
@@ -39,6 +38,13 @@ class App extends Component {
                     
                 })
             })
+            .catch(error => {
+                this.setState({
+                    error:true,
+                    errorMsg:'We were unable to fetch the data, please try again later!'
+                })
+            })
+        }
         )
     }
     handleChange = (e) => {
@@ -47,23 +53,47 @@ class App extends Component {
         })
     }
     submitCitySearch = (e) => {
+        const city = this.state.searchTerm;
         e.preventDefault();
-       
-        api.getCountry(this.state.searchTerm)
+       this.setState({
+           fetching: true,
+           city: city[0].toUpperCase() + city.substr(1)
+       }, () => {
+            api.getCountry(city)
             .then(data => {
-                console.log(data);
                 this.setState({
                     country_name: data.country_name,
+                    city: data.city_name,
+                    fetching: false
                 })
             })
             .catch( error => {
-                console.warn('Error in submitCitySearch: '+error);
+                this.setState({
+                    error: true,
+                    errorMsg:"Sorry, the city you entered doesn/'t seem to exist - please check the spelling."
+                })
             })
 
+       });
+        
     }
     checkCityWeather= () => {
         this.setState({
             citySearch:true,
+        })
+    }
+    resetAll = () => {
+        this.setState({
+            ip: null,
+            country_name: null,
+            city: null,
+            lat: null,
+            lon: null,
+            fetching:null,
+            citySearch: null,
+            searchTerm: '',
+            error:null,
+            errorMsg:null
         })
     }
     render() {
@@ -71,9 +101,15 @@ class App extends Component {
         return (
             <div>
                 <h1>Weather App</h1>
-                    <button onClick={this.checkUserWeather}>Check Weather in your own city</button>
-                    <h3>Or</h3>
-                    { this.state.citySearch === null ?
+                <div className="row">
+                    <div>
+                        <button onClick={this.checkUserWeather}>Check Weather in your own city</button>
+                    </div>
+                    
+                        <span>Or</span>
+                   
+                    <div>
+                    { !this.state.citySearch ?
                         <button onClick={this.checkCityWeather}>Search Weather of a specific city</button>
                         :
                         (<form onSubmit={this.submitCitySearch}>
@@ -81,10 +117,11 @@ class App extends Component {
                                             value={this.state.searchTerm} 
                                             onChange={this.handleChange} 
                                             />
-                            <p>{this.state.searchTerm}</p>
                         </form>
                         )
                     }
+                    </div>
+                </div>
                 {
                     this.state.fetching && <div>Fetching data</div>
                 }
@@ -94,9 +131,7 @@ class App extends Component {
                             city={city} 
                             country_name={country_name}
                             />
-                 
-
-                }
+                 }
             </div>
         );
     }
