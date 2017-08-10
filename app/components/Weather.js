@@ -51,6 +51,16 @@ const DayView = (props) => {
     );
 };
 
+const HourView = (props) => {
+    return(
+        <div>
+            <h3>{props.hour}</h3>
+            <span>{props.day}</span>
+            <h3>{props.temp}</h3>
+        </div>
+    )
+} 
+
 class Weather extends Component {
     constructor(props){
         super(props);
@@ -58,6 +68,7 @@ class Weather extends Component {
             fetching: null,
             data: null,
             error: null,
+            selectedDay: null
         }
     }
     componentDidMount = () => {
@@ -65,7 +76,8 @@ class Weather extends Component {
         api.getForecast(lat, lon)
             .then(data => {
                 this.setState({
-                    data: data
+                    data: data,
+                    selectedDay: data[0].day
                 })
             })
             .catch(error => {
@@ -83,22 +95,36 @@ class Weather extends Component {
                                                     country_name={this.props.country_name}
                                                     {...this.state.data[0]} />
                     }
+                    <div className="hours-section">
+                    {
+                        this.state.data && 
+                        this.state.data.filter((item) => {
+                            return (item.day === this.state.selectedDay)
+                        }).map( (hourObj, index) => {
+                            return (
+                                <HourView key={index} {...hourObj} />
+                            )
+                        })
+                    }
+                 </div>
                 </div>
                  <div className="days-section">
                       {
                         this.state.data && 
                         this.state.data.filter((item) => {
-                                            
-                                                    return(item.hour === this.state.data[0].hour
-                         ) })
-                                        .map((day, index) => {
-                                            console.log(this.state.data);
+                                // this one is to be changed later
+                                // needs to check selectedDay!!
+                            return(item.hour === this.state.data[0].hour) 
+                            })
+                                    .map((dayObj, index) => {
+
                                            return(
-                                            <DayView key={index} {...day} />
+                                            <DayView key={index} {...dayObj} />
                                            )
                                         })
                     }  
                  </div>
+                
             </div>
         );
     }
