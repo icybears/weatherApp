@@ -15,7 +15,7 @@ module.exports = {
     ]
   },
   devServer: {
-    historyApiFallback: true // this one is for fixing the routing issue
+    historyApiFallback: true 
   },
  plugins:[
      new HtmlWebpackPlugin({

@@ -138,7 +138,7 @@ class Weather extends Component {
         const selectedHour = this.state.selectedHour;
     
         return (
-            <div className="container">
+            <div>
                  <div className="main-section">
                     {
                         this.state.data && this.state.data

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import api from '../utils/api';
 import Weather from './Weather';
+import {Route, Link} from 'react-router-dom';
 
 class App extends Component {
     constructor(props){
@@ -41,19 +42,25 @@ class App extends Component {
         const {city, country_name, lat, lon} = this.state;
         return (
             <div>
+                <Route path='/' component={Landing} />
                 <h1>Weather App</h1>
-                <button onClick={this.checkUserWeather}>Check Weather in your own area</button>
+                <Link to="/weather">
+                    <button onClick={this.checkUserWeather}>Check Weather in your own area</button>
+                </Link>
                 {
                     this.state.fetching && <div>Fetching data</div>
                 }
                 {
                     this.state.fetching===false &&
-                     <Weather 
+                    <Route path='/weather' render={() => (
+                            <Weather 
                             city={city} 
                             country_name={country_name} 
                             lat={lat}
                             lon={lon}
                             />
+                    )} />
+
                 }
             </div>
         );
