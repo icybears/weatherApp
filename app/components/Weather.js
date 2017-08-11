@@ -107,7 +107,16 @@ class Weather extends Component {
     }
     componentWillReceiveProps = (nextProps) => {
         if(nextProps.city !== this.props.city){
-            this.fetchWeatherData(nextProps.city);
+            this.setState({
+                data: null,
+            selectedDay: null,
+            selectedHour: null,
+            },
+            () => {
+                 this.fetchWeatherData(nextProps.city);
+            }
+        )
+           
         }
     }
    
@@ -207,7 +216,7 @@ class Weather extends Component {
                                         })
                     }  
                  </div>
-                   </div> //error: JSx must have one parent element
+                   </div> 
                 }
             </div>
         );

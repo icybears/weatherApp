@@ -39,8 +39,6 @@ class App extends Component {
                     ip: data.ip,
                     country_name: data.country_name,
                     city: data.city,
-                    lat: data.latitude,
-                    lon: data.longitude,
                     fetching: null,
                     
                 })
@@ -72,7 +70,8 @@ class App extends Component {
                     city: data.city_name,
                     fetching: false,
                     error: false,
-                    errorMsg:''
+                    errorMsg:'',
+                    searchTerm: '',
                 },
                 () => {
                     window.scrollTo(0, document.body.scrollHeight);
@@ -129,7 +128,7 @@ class App extends Component {
                {
                    this.state.error && <div className="error-bar">{this.state.errorMsg}</div>
                }
-                <h1>Weather App</h1>
+                <h1 className="app-title">Weather App</h1><span className="subtitle">by <a href="https://github.com/icybears/">icybears</a></span>
                 <div className={btnsPositionClass}>
                     <div>
                         <button onClick={this.checkUserWeather}>View weather in your area</button>
