@@ -105,34 +105,42 @@ class Weather extends Component {
             selectedHour: null,
         }
     }
-    componentWillMount = () => {
-        const city = this.props.city;
-        if(!this.props.error){
-        api.getForecast(city)
-            .then(data => {
-                this.setState({
-                    data: data,
-                    selectedDay: data[0].day,
-                    selectedHour: data[0].hour,
-                },
-                () => {
-                    window.scrollTo(0, document.body.scrollHeight);
-                }
-            )
-            })
-            .catch(error => {
-                const msg = 'Sorry, we were unable to fetch the data for your position.'
-                this.props.handleError(msg);
-                this.setState({
-                     data: null,
-                    selectedDay: null,
-                    selectedHour: null,
-                })
-            })
-    
-    
-    
+    componentWillReceiveProps = (nextProps) => {
+        if(nextProps.city !== this.props.city){
+            this.fetchWeatherData(nextProps.city);
         }
+    }
+   
+    componentWillMount = () => {
+       let city = this.props.city;
+        this.fetchWeatherData(city);
+    }
+    fetchWeatherData = (city) => {
+        
+        if(!this.props.error){
+            api.getForecast(city)
+                .then(data => {
+                    this.setState({
+                        data: data,
+                        selectedDay: data[0].day,
+                        selectedHour: data[0].hour,
+                    },
+                    () => {
+                        window.scrollTo(0, document.body.scrollHeight);
+                    }
+                )
+                })
+                .catch(error => {
+                    console.log('this was executed');
+                    const msg = 'Sorry, we were unable to fetch the data for your position.'
+                    this.props.handleError(msg);
+                    this.setState({
+                        data: null,
+                        selectedDay: null,
+                        selectedHour: null,
+                    })
+                })
+            }
     }
     changeDay = (day) => {
         this.setState({

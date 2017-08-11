@@ -12,8 +12,6 @@ class App extends Component {
             ip: null,
             country_name: null,
             city: null,
-            lat: null,
-            lon: null,
             fetching:null,
             citySearch: null,
             searchTerm: '',
@@ -27,6 +25,13 @@ class App extends Component {
             fetching: true,
             error: false,
             errorMsg: null,
+            citySearch: false,
+            searchTerm:'',
+            error:null,
+            errorMsg:null,
+            country_name:null,
+
+
         },() => {
         api.fetchUserInfo()
             .then(data => {
@@ -37,7 +42,6 @@ class App extends Component {
                     lat: data.latitude,
                     lon: data.longitude,
                     fetching: null,
-                    citySearch: false,
                     
                 })
             })
@@ -56,7 +60,7 @@ class App extends Component {
         })
     }
     submitCitySearch = (e) => {
-        const city = this.state.searchTerm;
+        let city = this.state.searchTerm;
         e.preventDefault();
        this.setState({
            fetching: true,
@@ -77,6 +81,7 @@ class App extends Component {
 
             })
             .catch( error => {
+                console.warn(error);
                 const msg = "Sorry, we couldn't find a match for the city name you entered.";
                 this.handleError(msg);
             })
@@ -114,7 +119,7 @@ class App extends Component {
         })
     }
     render() {
-        const {city, country_name, lat, lon, error} = this.state;
+        const {city, country_name, error} = this.state;
         /*const btnsPositionClass= (this.state.fetching === null) ? 'middle btns':'top btns';*/
         const btnsPositionClass= 'middle btns';
 
