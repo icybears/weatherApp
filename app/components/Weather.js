@@ -107,12 +107,13 @@ class Weather extends Component {
     }
     componentWillMount = () => {
         const city = this.props.city;
+        if(!this.props.error){
         api.getForecast(city)
             .then(data => {
                 this.setState({
                     data: data,
                     selectedDay: data[0].day,
-                    selectedHour: data[0].hour
+                    selectedHour: data[0].hour,
                 },
                 () => {
                     window.scrollTo(0, document.body.scrollHeight);
@@ -128,6 +129,10 @@ class Weather extends Component {
                     selectedHour: null,
                 })
             })
+    
+    
+    
+        }
     }
     changeDay = (day) => {
         this.setState({
@@ -145,6 +150,9 @@ class Weather extends Component {
     
         return (
             <div>
+                { 
+                    this.state.data && !this.props.error && 
+                    <div>
                  <div className="main-section">
                     {
                         this.state.data && this.state.data
@@ -191,7 +199,7 @@ class Weather extends Component {
                                         })
                     }  
                  </div>
-                
+                   </div> //error: JSx must have one parent element
                 }
             </div>
         );

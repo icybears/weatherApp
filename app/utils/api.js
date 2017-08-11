@@ -41,6 +41,15 @@ const substrCountry = address => {
     }
     return country.reverse().join('').trim();
 }
+const verifyCityName = (status) => {
+    const cases = {
+        "locality": true,
+        "administrative_area_level_2": true,
+        "administrative_area_level_1": true,
+        "default": false
+    }
+    return (cases[status] || cases["default"])
+}
 const api = {
     fetchUserInfo: () => (
             axios.get('https://freegeoip.net/json/')
@@ -52,9 +61,9 @@ const api = {
                 if(response.data.results.length === 0){
                      throw 'Invalid City Name';
                 }
-                if(response.data.results[0].geometry.location_type==="APPROXIMATE"){
+                if(verifyCityName(response.data.results[0].address_components[0].types[0])){
                 const country_name = substrCountry(response.data.results[0].formatted_address);
-                const city_name = response.data.results[0].address_components[0].short_name;
+                const city_name = response.data.results[0].address_components[0].long_name;
                return({
                     country_name: country_name,
                     city_name: city_name

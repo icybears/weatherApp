@@ -24,7 +24,9 @@ class App extends Component {
     
     checkUserWeather = () => {
         this.setState({
-            fetching: true
+            fetching: true,
+            error: false,
+            errorMsg: null,
         },() => {
         api.fetchUserInfo()
             .then(data => {
@@ -58,7 +60,6 @@ class App extends Component {
         e.preventDefault();
        this.setState({
            fetching: true,
-           city: city[0].toUpperCase() + city.substr(1)
        }, () => {
             api.getCountry(city)
             .then(data => {
@@ -76,12 +77,8 @@ class App extends Component {
 
             })
             .catch( error => {
-                this.setState({
-                    error: true,
-                    errorMsg:"Sorry, we couldn't find a match for the city name you entered.",
-                    fetching: null,
-                    searchTerm:''
-                })
+                const msg = "Sorry, we couldn't find a match for the city name you entered.";
+                this.handleError(msg);
             })
 
        });
@@ -91,7 +88,15 @@ class App extends Component {
         this.setState({
             error: true,
             errorMsg: error,
-            fetching: null
+            fetching: null,
+            ip: null,
+            country_name: null,
+            city: null,
+            lat: null,
+            lon: null,
+            fetching:null,
+            citySearch: null,
+            searchTerm: '',
         })
     }
     checkCityWeather= () => {
@@ -101,7 +106,6 @@ class App extends Component {
     }
     resetAll = () => {
         this.setState({
-            ip: null,
             fetching:null,
             citySearch: null,
             searchTerm: '',
@@ -117,6 +121,9 @@ class App extends Component {
         
         return (
             <div>
+               {
+                   this.state.error && <div className="error-bar">{this.state.errorMsg}</div>
+               }
                 <h1>Weather App</h1>
                 <div className={btnsPositionClass}>
                     <div>
@@ -138,7 +145,7 @@ class App extends Component {
                     </div>
                 </div>
                 {
-                    this.state.fetching && <div className="fetching">Fetching data</div>
+                    this.state.fetching && <div className="fetching">Fetching data...</div>
                 }
                 {
                     this.state.city &&
