@@ -65,9 +65,7 @@ const api = {
                 }
             
             } 
-        ).catch( error => {
-            console.warn(error);
-        })
+        )
         
     ),
     getForecast: (city) => (

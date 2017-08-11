@@ -1,12 +1,33 @@
-html, body{
-    background-color:rgb(237, 237, 237);
+html{
+    
+    height:100%;
+    position:relative;
+    background: #e8bdab;
+    background: -moz-linear-gradient(-45deg, #e8bdab 1%, #ceadca 100%);
+    background: -webkit-linear-gradient(-45deg, #e8bdab 1%,#ceadca 100%);
+    background: linear-gradient(135deg, #e8bdab 1%,#ceadca 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8bdab', endColorstr='#ceadca',GradientType=1 ); 
+}
+body{
+    
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
     position:relative;
+    width:100%;
+    height:auto;
+    margin:0;
     min-width:500px;
     color:rgb(51, 45, 45);
+    background: #e8bdab;
+    background: -moz-linear-gradient(-45deg, #e8bdab 1%, #ceadca 100%);
+    background: -webkit-linear-gradient(-45deg, #e8bdab 1%,#ceadca 100%);
+    background: linear-gradient(135deg, #e8bdab 1%,#ceadca 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8bdab', endColorstr='#ceadca',GradientType=1 ); 
+     
 }
+
 h1{
-    margin:5px 20px;
+    margin:0;
+    padding:5px 20px;
 }
 .day-view{
     position:relative;
@@ -142,7 +163,7 @@ width:600px;
 .middle{
     margin:150px auto;
  
-    width:200px;
+    width:300px;
 }
 .btns{
     text-align:center;
@@ -170,8 +191,13 @@ button:active{
     border-bottom:none;
     box-shadow: none;
 }
-.top > .separator{
-    display:inline-block;
-    width:90px;
-    padding-top:16px;
+
+.form input{
+    font-size: 1.3em;
+    background-color:rgba(0,0,0,0.7);
+    outline: none;
+    padding:10px;
+    color:rgba(255,255,255,0.9);
+    box-shadow:0 0 10px rgba(0,0,0,0.6);
+    border: solid 1px rgb(51, 45, 45);
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import api from '../utils/api';
 import Weather from './Weather';
 
@@ -33,7 +34,7 @@ class App extends Component {
                     city: data.city,
                     lat: data.latitude,
                     lon: data.longitude,
-                    fetching: false,
+                    fetching: null,
                     citySearch: false,
                     
                 })
@@ -64,18 +65,34 @@ class App extends Component {
                 this.setState({
                     country_name: data.country_name,
                     city: data.city_name,
-                    fetching: false
-                })
+                    fetching: false,
+                    error: false,
+                    errorMsg:''
+                },
+                () => {
+                    window.scrollTo(0, document.body.scrollHeight);
+                }
+            )
+
             })
             .catch( error => {
                 this.setState({
                     error: true,
-                    errorMsg:"Sorry, the city you entered doesn/'t seem to exist - please check the spelling."
+                    errorMsg:"Sorry, we couldn't find a match for the city name you entered.",
+                    fetching: null,
+                    searchTerm:''
                 })
             })
 
        });
         
+    }
+    handleError = (error) => {
+        this.setState({
+            error: true,
+            errorMsg: error,
+            fetching: null
+        })
     }
     checkCityWeather= () => {
         this.setState({
@@ -85,10 +102,6 @@ class App extends Component {
     resetAll = () => {
         this.setState({
             ip: null,
-            country_name: null,
-            city: null,
-            lat: null,
-            lon: null,
             fetching:null,
             citySearch: null,
             searchTerm: '',
@@ -97,21 +110,24 @@ class App extends Component {
         })
     }
     render() {
-        const {city, country_name, lat, lon} = this.state;
-        const btnsPositionClass= (this.state.fetching === false) ? 'top btns' : 'middle btns';
+        const {city, country_name, lat, lon, error} = this.state;
+        /*const btnsPositionClass= (this.state.fetching === null) ? 'middle btns':'top btns';*/
+        const btnsPositionClass= 'middle btns';
+
+        
         return (
             <div>
                 <h1>Weather App</h1>
                 <div className={btnsPositionClass}>
                     <div>
-                        <button onClick={this.checkUserWeather}>View weather in your city</button>
+                        <button onClick={this.checkUserWeather}>View weather in your area</button>
                     </div>
-                        {/* <span className="separator">OR</span> */}
+                      
                     <div>
                     { !this.state.citySearch ?
                         <button onClick={this.checkCityWeather}>Search other cities</button>
                         :
-                        (<form onSubmit={this.submitCitySearch}>
+                        (<form className="form" onSubmit={this.submitCitySearch}>
                             <input type="text" placeholder="Enter city name" 
                                             value={this.state.searchTerm} 
                                             onChange={this.handleChange} 
@@ -122,13 +138,15 @@ class App extends Component {
                     </div>
                 </div>
                 {
-                    this.state.fetching && <div>Fetching data</div>
+                    this.state.fetching && <div className="fetching">Fetching data</div>
                 }
                 {
-                    this.state.fetching===false &&
-                            <Weather 
+                    this.state.city &&
+                            <Weather
                             city={city} 
                             country_name={country_name}
+                            handleError={this.handleError}
+                            error={error}
                             />
                  }
             </div>

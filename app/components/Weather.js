@@ -100,14 +100,12 @@ class Weather extends Component {
     constructor(props){
         super(props);
         this.state = {
-            fetching: null,
             data: null,
-            error: null,
             selectedDay: null,
             selectedHour: null,
         }
     }
-    componentDidMount = () => {
+    componentWillMount = () => {
         const city = this.props.city;
         api.getForecast(city)
             .then(data => {
@@ -115,11 +113,19 @@ class Weather extends Component {
                     data: data,
                     selectedDay: data[0].day,
                     selectedHour: data[0].hour
-                })
+                },
+                () => {
+                    window.scrollTo(0, document.body.scrollHeight);
+                }
+            )
             })
             .catch(error => {
+                const msg = 'Sorry, we were unable to fetch the data for your position.'
+                this.props.handleError(msg);
                 this.setState({
-                    error: true
+                     data: null,
+                    selectedDay: null,
+                    selectedHour: null,
                 })
             })
     }
@@ -165,8 +171,8 @@ class Weather extends Component {
                             )
                         })
                     }
+                    </div>
                  </div>
-                </div>
                  <div className="days-section">
                       {
                         this.state.data && 
@@ -186,6 +192,7 @@ class Weather extends Component {
                     }  
                  </div>
                 
+                }
             </div>
         );
     }
