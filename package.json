@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open",
-    "build": "process.env.NODE_ENV='production' webpack -p"
+    "build": "cross-env NODE_ENV=production webpack -p"
   },
   "babel": {
     "presets": [
