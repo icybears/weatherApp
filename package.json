@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server --open",
+    "build": "process.env.NODE_ENV='production' webpack -p"
   },
   "babel": {
     "presets": [
@@ -36,6 +37,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "cross-env": "^5.0.5",
     "css-loader": "^0.28.4",
     "html-webpack-plugin": "^2.30.1",
     "style-loader": "^0.18.2",
