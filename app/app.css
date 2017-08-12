@@ -219,7 +219,7 @@ button:active{
 }
 .fetching{
     position:absolute;
-    top:400px;
+    top:440px;
     left:50%;
     transform: translateX(-50%);
     font-size: 1.3em;

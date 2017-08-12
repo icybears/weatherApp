@@ -30,6 +30,7 @@ class App extends Component {
             error:null,
             errorMsg:null,
             country_name:null,
+            city:null
 
 
         },() => {
@@ -46,7 +47,8 @@ class App extends Component {
             .catch(error => {
                 this.setState({
                     error:true,
-                    errorMsg:'We were unable to fetch the data, please try again later!'
+                    errorMsg:'We were unable to fetch the data, please try again later!',
+                    fetching: null
                 })
             })
         }
